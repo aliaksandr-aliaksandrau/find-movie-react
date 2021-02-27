@@ -5,11 +5,11 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
   mode: 'development',
   output: {
-    path: path.resolve(__dirname, 'dev'),
+    path: path.resolve(__dirname, './../dev'),
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dev'),
+    contentBase: path.join(__dirname, './../dev'),
     compress: true,
     port: 4500,
     open: true

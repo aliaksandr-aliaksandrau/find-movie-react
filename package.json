@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:prod": "webpack --config webpack.prod.js ",
-    "build:dev": "webpack --config webpack.dev.js ",
-    "start": "webpack serve --config webpack.dev.js",
+    "build:prod": "webpack --env NODE_ENV=production",
+    "build:dev": "webpack --env NODE_ENV=development",
+    "start": "webpack serve --env NODE_ENV=development",
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
