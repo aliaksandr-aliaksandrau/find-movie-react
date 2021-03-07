@@ -5,12 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     filename: '[name].[hash].bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   optimization: {
     splitChunks: {
@@ -28,12 +28,25 @@ module.exports = {
         }
       },
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: 'awesome-typescript-loader',
+
+      },
+      {
         test: /\.html$/,
         loader: 'html-loader'
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        test: /\.(s*)css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(jpg|svg|png)$/,
+        loader: "file-loader",
+        options: {
+          name: '[path][name].[ext]?[hash]'
+        }
       }
     ]
   },
@@ -41,6 +54,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      template: './src/index.html',
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({

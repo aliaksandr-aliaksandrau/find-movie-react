@@ -1,0 +1,35 @@
+.MovieCard {
+  width: 25%;
+  height: 35%;
+  background-color: #232323;
+  color: #b1b1b1;
+  margin: 20px 5px;
+
+  .MovieCard__image {
+    width: 100%;
+  }
+
+  .MovieCard__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 25px 0 15px;
+
+    .MovieCard__title {
+      font-size: 18px;
+    }
+    .MovieCard__year {
+      width: 65px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #b1b1b1;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  }
+  .MovieCard__description {
+    font-size: 12px;
+  }
+}
