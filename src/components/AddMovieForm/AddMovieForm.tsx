@@ -1,6 +1,6 @@
 import * as React from "react";
 
-class AddMovie extends React.Component<any, any> {
+class AddMovieForm extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = { value: "" };
@@ -27,8 +27,6 @@ class AddMovie extends React.Component<any, any> {
   render() {
     return (
       <div className="AddMovieForm__form-container">
-       
-       
         <form onSubmit={this.handleSubmit}>
           <label>TITLE</label>
           <input type="text" placeholder="Title here"></input>
@@ -42,12 +40,24 @@ class AddMovie extends React.Component<any, any> {
           <input type="text" placeholder="Overview here"></input>
           <label>RUNTIME</label>
           <input type="text" placeholder="Runtime here"></input>
+
+          <div className="ModalWindow__control-block-container">
+            <button
+              onClick={this.closeModalWindow}
+              className="ModalWindow__button-light"
+            >
+              RESET
+            </button>
+            <input
+              type="submit"
+              value="SUBMIT"
+              className="ModalWindow__button-filled"
+            />
+          </div>
         </form>
-        <button onClick={this.closeModalWindow}>RESET</button>
-        <input type="submit" value="Add Movie" />
       </div>
     );
   }
 }
 
-export default AddMovie;
+export default AddMovieForm;

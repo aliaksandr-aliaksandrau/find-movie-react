@@ -1,5 +1,7 @@
 import * as React from "react";
-import AddMovie from "../AddMovie/AddMovie";
+import AddMovieForm from "../AddMovieForm/AddMovieForm";
+import DeleteMovieForm from "../DeleteMovieForm/DeleteMovieForm";
+import EditMovieForm from "../EditMovieForm/EditMovieForm";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ModalWindow from "../ModalWindow/ModalWindow";
@@ -16,7 +18,9 @@ type AppState = {
   closeAddMovieForm: () => void;
 };
 
-const AddMovieModalWindow = ModalWindow(AddMovie);
+const AddMovieModalWindow = ModalWindow(AddMovieForm);
+const DeleteMovieModalWindow = ModalWindow(DeleteMovieForm);
+const EditMovieModalWindow = ModalWindow(EditMovieForm);
 
 class FindMovieState extends React.Component<{}, any> {
   state: any;
@@ -29,13 +33,25 @@ class FindMovieState extends React.Component<{}, any> {
         this.setState({ searchText: e });
       },
       showAddMovieForm: false,
-      showEditMovieForm: false,
       openAddMovieForm: () => {
         this.setState({ showAddMovieForm: true });
       },
-
       closeAddMovieForm: () => {
         this.setState({ showAddMovieForm: false });
+      },
+      showDeleteMovieForm: false,
+      openDeleteMovieForm: (id: string) => {
+        this.setState({ showDeleteMovieForm: true });
+      },
+      closeDeleteMovieForm: () => {
+        this.setState({ showDeleteMovieForm: false });
+      },
+      showEditMovieForm: false,
+      openEditMovieForm: (id: string) => {
+        this.setState({ showEditMovieForm: true });
+      },
+      closeEditMovieForm: () => {
+        this.setState({ showEditMovieForm: false });
       },
     };
   }
@@ -51,12 +67,29 @@ class FindMovieState extends React.Component<{}, any> {
           searchMovie={this.state.searchMovie}
           openAddMovieForm={this.state.openAddMovieForm}
         />
-        <MovieDashboard movies={filteredMovies} />
+        <MovieDashboard
+          movies={filteredMovies}
+          openDeleteMovieForm={this.state.openDeleteMovieForm}
+          openEditMovieForm={this.state.openEditMovieForm}
+        />
         <Footer />
         {this.state.showAddMovieForm && (
           <AddMovieModalWindow
             title={"ADD MOVIE"}
             closeModalWindow={this.state.closeAddMovieForm}
+          />
+        )}
+        {this.state.showDeleteMovieForm && (
+          <DeleteMovieModalWindow
+            title={"DELETE MOVIE"}
+            closeModalWindow={this.state.closeDeleteMovieForm}
+          />
+        )}
+
+        {this.state.showEditMovieForm && (
+          <EditMovieModalWindow
+            title={"EDIT MOVIE"}
+            closeModalWindow={this.state.closeEditMovieForm}
           />
         )}
       </>

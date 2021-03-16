@@ -1,4 +1,5 @@
 import * as React from "react";
+import ClosingCrossIcon from "./ClosingCrossIcon";
 
 import "./ModalWindow.scss";
 
@@ -8,7 +9,9 @@ export default function ModalWindow(Component: any): any {
       <div className="ModalWindow">
         <div className="ModalWindow__form-container">
           <div className="ModalWindow__close-button-container">
-            <button onClick={props.closeModalWindow}>close</button>
+            <span onClick={props.closeModalWindow}>
+              <ClosingCrossIcon />
+            </span>
           </div>
           <div className="ModalWindow__title">{props.title}</div>
           <Component {...props} />

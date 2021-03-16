@@ -6,6 +6,8 @@ import "./MovieDashboard.scss";
 
 type MovieDashboardProps = {
   movies: Movie[];
+  openDeleteMovieForm: Function;
+  openEditMovieForm: Function;
 };
 
 export default function MovieDashboard(props: MovieDashboardProps) {
@@ -20,13 +22,10 @@ export default function MovieDashboard(props: MovieDashboardProps) {
       <div className="MovieDashboard__movies-list">
         {movies.map((movie) => (
           <MovieCard
-            title={movie.title}
-            releaseDate={
-              movie.releaseDate ? movie.releaseDate.split("-")[0] : ""
-            }
-            posterPath={movie.posterPath}
-            description={movie.genres.join(", ")}
             key={movie.id}
+            movie={movie}
+            openEditMovieForm={props.openEditMovieForm}
+            openDeleteMovieForm={props.openDeleteMovieForm}
           />
         ))}
       </div>
