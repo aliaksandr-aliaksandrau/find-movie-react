@@ -3,27 +3,26 @@ import { Movie } from "./movie.model";
 
 import "./MovieCard.scss";
 
-export default function MovieCard(movie: Movie) {
+export default function MovieCard(props: {
+  movie: Movie;
+  openDeleteMovieForm: Function;
+  openEditMovieForm: Function;
+}) {
   return (
     <div className="MovieCard">
       <img
         className="MovieCard__image"
-        src={movie.posterPath}
+        src={props.movie.posterPath}
         alt="film-logo"
       ></img>
 
       <div className="MovieCard__info">
-        <div className="MovieCard__title">{movie.title}</div>
-        <div className="MovieCard__year">{movie.releaseDate}</div>
+        <div className="MovieCard__title">{props.movie.title}</div>
+        <div className="MovieCard__year">{props.movie.releaseYear}</div>
       </div>
-      <div className="MovieCard__description">{movie.description}</div>
+      <div className="MovieCard__description">{props.movie.description}</div>
+      <button onClick={props.openEditMovieForm as any}>EDIT</button>
+      <button onClick={props.openDeleteMovieForm as any}>DELETE</button>
     </div>
   );
 }
-
-MovieCard.defaultProps = {
-  title: "Some new movie...",
-  description: "Some description",
-  year: 0,
-  genre: "",
-};
