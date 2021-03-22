@@ -3,7 +3,7 @@ import ClosingCrossIcon from "./ClosingCrossIcon";
 
 import "./ModalWindow.scss";
 
-export default function ModalWindow(Component: any): any {
+export default function ModalWindow(Component: any, title: string = ""): any {
   return function ModalWindowComponent({ ...props }) {
     return (
       <div className="ModalWindow">
@@ -13,7 +13,7 @@ export default function ModalWindow(Component: any): any {
               <ClosingCrossIcon />
             </span>
           </div>
-          <div className="ModalWindow__title">{props.title}</div>
+          <div className="ModalWindow__title">{title.toUpperCase()}</div>
           <Component {...props} />
         </div>
       </div>

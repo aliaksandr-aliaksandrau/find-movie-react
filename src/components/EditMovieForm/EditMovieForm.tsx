@@ -1,10 +1,12 @@
 import * as React from "react";
+import { Movie } from "../MovieCard";
 
-export default function EditMovieForm() {
+export default function EditMovieForm(props: { movie: Movie }) {
+  const movie = props.movie;
   return (
     <form>
       <label>MOVIE ID</label>
-      <input type="text" placeholder="Title here"></input>
+      <p>{movie.id}</p>
       <label>TITLE</label>
       <input type="text" placeholder="Title here"></input>
       <label>RELEASE DATE</label>
