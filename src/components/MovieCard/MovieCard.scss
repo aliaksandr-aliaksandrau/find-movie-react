@@ -32,4 +32,10 @@
   .MovieCard__description {
     font-size: 12px;
   }
+  .MovieCard_three-dot-menu {
+    width: 30px;
+    height: 30px;
+    background-image: radial-gradient(circle, black 3px, transparent 3px);
+    background-size: 100% 33.33%;
+  }
 }

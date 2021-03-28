@@ -1,12 +1,17 @@
 import * as React from "react";
-import { Movie } from "../MovieCard";
+import { useEffect } from "react";
 
-export default function EditMovieForm(props: { movie: Movie }) {
-  const movie = props.movie;
+export default function EditMovieForm(props: { movieId: string }) {
+  useEffect(() => {
+    console.log("EditMovieForm: load movie by id: ", movieId);
+    return () => console.log("EditMovieForm: unsubscribe movie loading");
+  }, [props.movieId]);
+
+  const movieId = props.movieId;
   return (
     <form>
       <label>MOVIE ID</label>
-      <p>{movie.id}</p>
+      <p>{movieId}</p>
       <label>TITLE</label>
       <input type="text" placeholder="Title here"></input>
       <label>RELEASE DATE</label>

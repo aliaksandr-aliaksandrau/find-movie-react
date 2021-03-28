@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import DeleteMovieForm from "../DeleteMovieForm/DeleteMovieForm";
 import EditMovieForm from "../EditMovieForm/EditMovieForm";
 import ModalWindow from "../ModalWindow/ModalWindow";
@@ -10,6 +10,7 @@ import "./MovieDashboard.scss";
 
 type MovieDashboardProps = {
   movies: Movie[];
+  setSelectedMovie: Function;
 };
 
 const EditMovieModalWindow = ModalWindow(EditMovieForm, "Edit Movie");
@@ -22,13 +23,20 @@ export default function MovieDashboard(props: MovieDashboardProps) {
   const [showEditForm, setShowEditForm] = useState(false);
   const [activeMovie, setActiveMovie] = useState({});
 
-  const getOpenDeleteMovieForm = (id: string) => () => {
-    setShowDeleteForm(true);
-  };
+  // const getOpenDeleteMovieForm = (id: string) => () => {
+  //   setShowDeleteForm(true);
+  // };
 
-  const getOpenEditMovieForm = (movie: Movie) => () => {
+  const getOpenDeleteMovieForm = useCallback(
+    (id: string) => () => {
+      setShowDeleteForm(true);
+    },
+    [showDeleteForm]
+  );
+
+  const getOpenEditMovieForm = (movieId: string) => () => {
     setShowEditForm(true);
-    setActiveMovie(movie);
+    setActiveMovie(movieId);
   };
 
   let result;
@@ -44,8 +52,9 @@ export default function MovieDashboard(props: MovieDashboardProps) {
             <MovieCard
               key={movie.id}
               movie={movie}
-              openEditMovieForm={getOpenEditMovieForm(movie)}
+              openEditMovieForm={getOpenEditMovieForm(movie.id)}
               openDeleteMovieForm={getOpenDeleteMovieForm(movie.id)}
+              setSelectedMovie={props.setSelectedMovie}
             />
           ))}
         </div>
