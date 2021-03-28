@@ -1,6 +1,8 @@
 import * as React from "react";
+import { useLoadMovieById } from "../../utility/custom-hooks/custom-hooks";
 
-export default function DeleteMovieForm(props: any) {
+export default function DeleteMovieForm(props: { movieId: string }) {
+  useLoadMovieById(props.movieId);
   return (
     <>
       <div className="ModalWindow__description">

@@ -21,14 +21,11 @@ export default function MovieDashboard(props: MovieDashboardProps) {
 
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [activeMovie, setActiveMovie] = useState({});
-
-  // const getOpenDeleteMovieForm = (id: string) => () => {
-  //   setShowDeleteForm(true);
-  // };
+  const [activeMovieId, setActiveMovieId] = useState(null);
 
   const getOpenDeleteMovieForm = useCallback(
-    (id: string) => () => {
+    (movieId: string) => () => {
+      setActiveMovieId(movieId);
       setShowDeleteForm(true);
     },
     [showDeleteForm]
@@ -36,7 +33,7 @@ export default function MovieDashboard(props: MovieDashboardProps) {
 
   const getOpenEditMovieForm = (movieId: string) => () => {
     setShowEditForm(true);
-    setActiveMovie(movieId);
+    setActiveMovieId(movieId);
   };
 
   let result;
@@ -61,12 +58,13 @@ export default function MovieDashboard(props: MovieDashboardProps) {
 
         {showDeleteForm && (
           <DeleteMovieModalWindow
+            movieId={activeMovieId}
             closeModalWindow={() => setShowDeleteForm(false)}
           />
         )}
         {showEditForm && (
           <EditMovieModalWindow
-            movie={activeMovie}
+            movieId={activeMovieId}
             closeModalWindow={() => setShowEditForm(false)}
           />
         )}

@@ -1,11 +1,8 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useLoadMovieById } from "../../utility/custom-hooks/custom-hooks";
 
 export default function EditMovieForm(props: { movieId: string }) {
-  useEffect(() => {
-    console.log("EditMovieForm: load movie by id: ", movieId);
-    return () => console.log("EditMovieForm: unsubscribe movie loading");
-  }, [props.movieId]);
+  useLoadMovieById(props.movieId);
 
   const movieId = props.movieId;
   return (
