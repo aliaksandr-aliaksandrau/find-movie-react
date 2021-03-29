@@ -1,7 +1,7 @@
 import * as React from "react";
-import SearchIcon from "../icons/SearchIcon/SearchIcon";
-import Logo from "../Logo/Logo";
-import { Movie } from "../MovieCard/movie.model";
+import SearchIcon from "../../components/icons/SearchIcon/SearchIcon";
+import Logo from "../../components/Logo/Logo";
+import { Movie } from "../../components/MovieCard/movie.model";
 import "./MovieDetails.scss";
 
 export default function MovieDetails(props: { movie: Movie; goHomePage: any }) {

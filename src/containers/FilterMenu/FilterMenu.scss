@@ -1,0 +1,17 @@
+.FilterMenu__container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #232323;
+  padding: 20px 0 20px;
+
+  .FilterMenu__genre-filter {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .FilterMenu__sorting {
+    margin-right: 50px;
+  }
+}

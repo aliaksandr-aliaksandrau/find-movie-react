@@ -7,7 +7,8 @@ import ModalWindow from "../../components/ModalWindow/ModalWindow";
 import { Movie } from "../../components/MovieCard/movie.model";
 import { mockedMovies } from "../../components/MovieDashboard/mocked-movies";
 import MovieDashboard from "../../components/MovieDashboard/MovieDashboard";
-import MovieDetails from "../../components/MovieDetails/MovieDetails";
+import FilterMenu from "../FilterMenu/FilterMenu";
+import MovieDetails from "../MovieDetails/MovieDetails";
 
 const AddMovieModalWindow = ModalWindow(AddMovieForm, "Add Movie");
 
@@ -21,15 +22,22 @@ export default function HomePage() {
 
   const [activeMovie, setActiveMovie] = useState(null);
 
+  const [genreFilter, setGenreFilter] = useState("");
+
   const goHomePage = () => setActiveMovie(null);
 
   useEffect(() => {
     const filteredMovies = movieList
+      .filter((movie: Movie) =>
+        genreFilter === ""
+          ? true
+          : movie.genres.some((genre) => genre === genreFilter)
+      )
       .filter((e: any) => e.title.match(searchText))
       .slice(0, 9);
 
     setMovies(filteredMovies);
-  }, [searchText]);
+  }, [searchText, genreFilter]);
 
   return (
     <>
@@ -42,7 +50,10 @@ export default function HomePage() {
           openAddMovieForm={() => setShowAddMovieForm(true)}
         />
       )}
-
+      <FilterMenu
+        setGenreFilter={setGenreFilter}
+        activeFilterOption={genreFilter}
+      />
       <MovieDashboard movies={movies} setSelectedMovie={setActiveMovie} />
       <Footer />
       {showAddMovieForm && (

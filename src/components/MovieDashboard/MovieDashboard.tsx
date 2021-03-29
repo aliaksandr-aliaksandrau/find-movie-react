@@ -43,7 +43,6 @@ export default function MovieDashboard(props: MovieDashboardProps) {
   } else {
     result = (
       <>
-        <div>{showDeleteForm}</div>
         <div className="MovieDashboard__movies-list">
           {movies.map((movie) => (
             <MovieCard
