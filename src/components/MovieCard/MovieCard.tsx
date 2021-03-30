@@ -15,7 +15,7 @@ export default function MovieCard(props: {
 
   return (
     <div className="MovieCard">
-      <div className="MovieCard_three-dot-menu"></div>
+      {/* <div className="MovieCard_three-dot-menu"></div> */}
       <img
         onClick={setSelectedMovie}
         className="MovieCard__image"
