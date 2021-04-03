@@ -1,10 +1,14 @@
 import * as React from "react";
+import { useLoadMovieById } from "../../utility/custom-hooks/custom-hooks";
 
-export default function EditMovieForm() {
+export default function EditMovieForm(props: { movieId: string }) {
+  useLoadMovieById(props.movieId);
+
+  const movieId = props.movieId;
   return (
     <form>
       <label>MOVIE ID</label>
-      <input type="text" placeholder="Title here"></input>
+      <p>{movieId}</p>
       <label>TITLE</label>
       <input type="text" placeholder="Title here"></input>
       <label>RELEASE DATE</label>

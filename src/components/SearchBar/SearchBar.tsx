@@ -1,39 +1,27 @@
 import * as React from "react";
+import { useState } from "react";
 import "./SearchBar.scss";
 
-class Search extends React.Component<any, any> {
-  constructor(props: { searchMovie: Function }) {
-    super(props);
-    this.state = { searchText: "" };
+export default function Search(props: { searchMovie: Function }) {
+  const [searchText, setSearchText] = useState("");
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event: any) {
-    this.setState({ searchText: event.target.value });
-  }
-
-  handleSubmit(event: any) {
-    this.props.searchMovie(this.state.searchText);
+  const submitSearch = (event: any) => {
+    props.searchMovie(searchText);
     event.preventDefault();
-  }
+  };
+  const changeSearchValue = (event: any) => setSearchText(event.target.value);
 
-  render() {
-    return (
-      <form className="SearchBar" onSubmit={this.handleSubmit}>
-        <input
-          value={this.state.searchText}
-          onChange={this.handleChange}
-          className="searchInput"
-          type="text"
-          name="search"
-          placeholder="What do you want to watch?"
-        ></input>
+  return (
+    <form className="SearchBar" onSubmit={submitSearch}>
+      <input
+        onChange={changeSearchValue}
+        className="searchInput"
+        type="text"
+        name="search"
+        placeholder="What do you want to watch?"
+      ></input>
 
-        <input className="searchButton" type="submit" value="Search" />
-      </form>
-    );
-  }
+      <input className="searchButton" type="submit" value="Search" />
+    </form>
+  );
 }
-export default Search;

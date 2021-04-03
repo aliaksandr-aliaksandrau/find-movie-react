@@ -1,0 +1,9 @@
+.FilterMenuItem__container {
+  color: white;
+  margin-right: 30px;
+  cursor: pointer;
+
+  .FilterMenuItem__title {
+    border-bottom: 1px solid red;
+  }
+}

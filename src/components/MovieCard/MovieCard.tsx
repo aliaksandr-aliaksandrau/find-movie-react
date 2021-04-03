@@ -7,10 +7,17 @@ export default function MovieCard(props: {
   movie: Movie;
   openDeleteMovieForm: Function;
   openEditMovieForm: Function;
+  setSelectedMovie: Function;
 }) {
+  const setSelectedMovie: any = () => {
+    props.setSelectedMovie(props.movie);
+  };
+
   return (
     <div className="MovieCard">
+      {/* <div className="MovieCard_three-dot-menu"></div> */}
       <img
+        onClick={setSelectedMovie}
         className="MovieCard__image"
         src={props.movie.posterPath}
         alt="film-logo"
