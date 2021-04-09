@@ -11,15 +11,26 @@ import MovieDetails from "../MovieDetails/MovieDetails";
 
 const AddMovieModalWindow = ModalWindow(AddMovieForm, "Add Movie");
 
+const serverUrl: string = "http://localhost:4000";
+
 export default function HomePage() {
   const [searchText, setSearchText] = useState("");
   const [genreFilter, setGenreFilter] = useState("");
 
   const movies = useLoadFilteredMovies(searchText, genreFilter);
-  
+
   const [showAddMovieForm, setShowAddMovieForm] = useState(false);
   const [activeMovie, setActiveMovie] = useState(null);
   const goHomePage = () => setActiveMovie(null);
+
+  fetch(serverUrl + "/movies?limit=3000")
+    .then((response) => {
+      const movies = response.json();
+      return movies;
+    })
+    .then((movies) => {
+      console.log("AAA: movies: ", movies);
+    });
 
   return (
     <>
