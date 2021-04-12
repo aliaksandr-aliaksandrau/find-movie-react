@@ -1,36 +1,32 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AddMovieForm from "../../components/AddMovieForm/AddMovieForm";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import ModalWindow from "../../components/ModalWindow/ModalWindow";
 import MovieDashboard from "../../components/MovieDashboard/MovieDashboard";
-import { useLoadFilteredMovies } from "../../utility/custom-hooks/custom-hooks";
+import { loadMovies } from "../../store/action-creators";
+import { State } from "../../store/initialState";
 import FilterMenu from "../FilterMenu/FilterMenu";
 import MovieDetails from "../MovieDetails/MovieDetails";
 
 const AddMovieModalWindow = ModalWindow(AddMovieForm, "Add Movie");
 
-const serverUrl: string = "http://localhost:4000";
-
 export default function HomePage() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadMovies());
+  }, []);
+
   const [searchText, setSearchText] = useState("");
   const [genreFilter, setGenreFilter] = useState("");
 
-  const movies = useLoadFilteredMovies(searchText, genreFilter);
+  const movies = useSelector((state: State) => state.movieList);
 
   const [showAddMovieForm, setShowAddMovieForm] = useState(false);
   const [activeMovie, setActiveMovie] = useState(null);
   const goHomePage = () => setActiveMovie(null);
-
-  fetch(serverUrl + "/movies?limit=3000")
-    .then((response) => {
-      const movies = response.json();
-      return movies;
-    })
-    .then((movies) => {
-      console.log("AAA: movies: ", movies);
-    });
 
   return (
     <>

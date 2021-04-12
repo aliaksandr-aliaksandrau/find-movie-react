@@ -7,6 +7,6 @@ export type State = {
 };
 
 export const initialState: State = {
-  movieList: mockedMovies.map((e) => new Movie(e)),
+  movieList: [],
   searchText: "",
 };
