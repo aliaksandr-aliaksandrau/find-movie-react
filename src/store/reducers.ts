@@ -1,4 +1,5 @@
 import { Movie } from "../components/MovieCard";
+import { sortingMoviesByDate } from "../utility/utility-functions";
 import { Action, ACTION_TYPES } from "./actions";
 import { initialState, State } from "./initialState";
 
@@ -26,9 +27,14 @@ export const rootReducer = function (
       return { ...state, searchText: action.payload };
     }
 
+    case ACTION_TYPES.SET_SORTING_VALUE: {
+      return { ...state, sortingValue: action.payload };
+    }
+
     case ACTION_TYPES.INIT_SORT_FILTER_MOVIES: {
       const genreFilter = state.genreFilter;
       const searchText = state.searchText;
+      const sortingProperty = state.sortingValue;
 
       let filteredMovies = state.movieList;
 
@@ -44,6 +50,12 @@ export const rootReducer = function (
         filteredMovies = filteredMovies.filter((e: Movie) =>
           e.title.toLocaleLowerCase().match(searchText.toLowerCase())
         );
+      }
+
+      if (sortingProperty === "releaseDate") {
+        filteredMovies = filteredMovies.sort(sortingMoviesByDate);
+      } else if (sortingProperty === "rating") {
+        filteredMovies = filteredMovies.sort((a, b) => b.rating - a.rating);
       }
 
       filteredMovies = filteredMovies.slice(0, 9);

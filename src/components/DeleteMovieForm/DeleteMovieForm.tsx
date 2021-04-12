@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { deleteMovieById } from "../../store/action-creators";
+import { deleteMovieById, initSortFilterMovies } from "../../store/action-creators";
 import { useLoadMovieById } from "../../utility/custom-hooks/custom-hooks";
 
 export default function DeleteMovieForm(props: { movieId: string, closeModalWindow: Function }) {
@@ -11,6 +11,7 @@ export default function DeleteMovieForm(props: { movieId: string, closeModalWind
   function deleteMovie(event: any) {
     event.preventDefault();
     dispatch(deleteMovieById(props.movieId));
+    dispatch(initSortFilterMovies());
     props.closeModalWindow();
   }
 

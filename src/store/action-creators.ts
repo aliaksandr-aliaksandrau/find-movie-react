@@ -29,6 +29,13 @@ export const setSearchText = (searchText: string): Action => {
   };
 };
 
+export const setSortingValue = (value: keyof Movie): Action => {
+  return {
+    type: ACTION_TYPES.SET_SORTING_VALUE,
+    payload: value,
+  };
+};
+
 export const initSortFilterMovies = (): Action => {
   return {
     type: ACTION_TYPES.INIT_SORT_FILTER_MOVIES,

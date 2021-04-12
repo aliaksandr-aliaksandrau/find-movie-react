@@ -6,6 +6,7 @@ export type State = {
   filteredMovies: Movie[];
   searchText: string;
   genreFilter: string;
+  sortingValue: keyof Movie;
 };
 
 export const initialState: State = {
@@ -13,4 +14,5 @@ export const initialState: State = {
   filteredMovies: [],
   searchText: "",
   genreFilter: "",
+  sortingValue: null,
 };
