@@ -8,13 +8,6 @@ export const setMoviesData = (movies: Movie[]): Action => {
   };
 };
 
-export const setFilteredMovies = (movies: Movie[]): Action => {
-  return {
-    type: ACTION_TYPES.SET_FILTERED_MOVIES,
-    payload: movies,
-  };
-};
-
 export const deleteMovieById = (id: string): Action => {
   return {
     type: ACTION_TYPES.DELETE_MOVIE,
@@ -29,6 +22,12 @@ export const setGenreFilter = (filter: string): Action => {
   };
 };
 
+export const setSearchText = (searchText: string): Action => {
+  return {
+    type: ACTION_TYPES.SET_SEARCH_TEXT,
+    payload: searchText,
+  };
+};
 
 export const initSortFilterMovies = (): Action => {
   return {
@@ -44,5 +43,5 @@ export const loadMovies = () => async (dispatch: (movies: any) => string) => {
   const movies = responseData.data.map((e) => new Movie(e));
 
   dispatch(setMoviesData(movies));
-  dispatch(setFilteredMovies(movies));
+  dispatch(initSortFilterMovies());
 };

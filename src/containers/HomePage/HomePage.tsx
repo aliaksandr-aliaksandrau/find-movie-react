@@ -19,8 +19,6 @@ export default function HomePage() {
     dispatch(loadMovies());
   }, []);
 
-  const [searchText, setSearchText] = useState("");
-
   const movies = useSelector((state: State) => state.filteredMovies);
 
   const [showAddMovieForm, setShowAddMovieForm] = useState(false);
@@ -33,10 +31,7 @@ export default function HomePage() {
         <MovieDetails movie={activeMovie} goHomePage={goHomePage} />
       )}
       {!activeMovie && (
-        <Header
-          searchMovie={setSearchText}
-          openAddMovieForm={() => setShowAddMovieForm(true)}
-        />
+        <Header openAddMovieForm={() => setShowAddMovieForm(true)} />
       )}
       <FilterMenu />
       <MovieDashboard movies={movies} setSelectedMovie={setActiveMovie} />
