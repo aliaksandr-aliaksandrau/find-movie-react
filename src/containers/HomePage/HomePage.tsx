@@ -20,9 +20,8 @@ export default function HomePage() {
   }, []);
 
   const [searchText, setSearchText] = useState("");
-  const [genreFilter, setGenreFilter] = useState("");
 
-  const movies = useSelector((state: State) => state.movieList);
+  const movies = useSelector((state: State) => state.filteredMovies);
 
   const [showAddMovieForm, setShowAddMovieForm] = useState(false);
   const [activeMovie, setActiveMovie] = useState(null);
@@ -39,10 +38,7 @@ export default function HomePage() {
           openAddMovieForm={() => setShowAddMovieForm(true)}
         />
       )}
-      <FilterMenu
-        setGenreFilter={setGenreFilter}
-        activeFilterOption={genreFilter}
-      />
+      <FilterMenu />
       <MovieDashboard movies={movies} setSelectedMovie={setActiveMovie} />
       <Footer />
       {showAddMovieForm && (

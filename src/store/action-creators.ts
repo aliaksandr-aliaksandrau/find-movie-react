@@ -5,20 +5,44 @@ export const setMoviesData = (movies: Movie[]): Action => {
   return {
     type: ACTION_TYPES.SET_MOVIES,
     payload: movies,
-  } as Action;
-}
+  };
+};
 
-export const deleteMovieById = (id :string): Action => {
+export const setFilteredMovies = (movies: Movie[]): Action => {
+  return {
+    type: ACTION_TYPES.SET_FILTERED_MOVIES,
+    payload: movies,
+  };
+};
+
+export const deleteMovieById = (id: string): Action => {
   return {
     type: ACTION_TYPES.DELETE_MOVIE,
-    payload: id
-  }
-}
+    payload: id,
+  };
+};
+
+export const setGenreFilter = (filter: string): Action => {
+  return {
+    type: ACTION_TYPES.SET_GENRE_FILTER,
+    payload: filter,
+  };
+};
+
+
+export const initSortFilterMovies = (): Action => {
+  return {
+    type: ACTION_TYPES.INIT_SORT_FILTER_MOVIES,
+  };
+};
 
 export const loadMovies = () => async (dispatch: (movies: any) => string) => {
   const responseData: { data: any[] } = await (
     await fetch("http://localhost:4000" + "/movies?limit=500")
   ).json();
 
-  dispatch(setMoviesData(responseData.data.map((e) => new Movie(e))));
+  const movies = responseData.data.map((e) => new Movie(e));
+
+  dispatch(setMoviesData(movies));
+  dispatch(setFilteredMovies(movies));
 };

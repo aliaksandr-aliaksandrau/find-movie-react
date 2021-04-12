@@ -1,15 +1,16 @@
 import * as Redux from "redux";
-
-// export type ActionTypes = "GET_MOVIES" | "SET_MOVIES";
-
 export interface Action extends Redux.Action {
   type: ACTION_TYPES;
-  payload: any;
+  payload?: any;
 }
 
 export enum ACTION_TYPES {
   SET_MOVIES = "SET_MOVIES",
+  SET_FILTERED_MOVIES = "SET_FILTERED_MOVIES",
   DELETE_MOVIE = "DELETE_MOVIE",
   EDIT_MOVIE = "EDIT_MOVIE",
   CREATE_MOVIE = "CREATE_MOVIE",
+  SEARCH_MOVIE = "SEARCH_MOVIE",
+  SET_GENRE_FILTER = "SET_GENRE_FILTER",
+  INIT_SORT_FILTER_MOVIES = "INIT_SORT_FILTER_MOVIES",
 }

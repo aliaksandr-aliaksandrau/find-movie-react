@@ -11,22 +11,12 @@ const menuConfig: FilterMenuItemModel[] = [
   { name: "Crime", filterOption: "Crime" },
 ];
 
-export default function FilterMenu(props: {
-  setGenreFilter: Function;
-  activeFilterOption: string;
-}) {
+export default function FilterMenu() {
   return (
     <div className="FilterMenu__container">
       <div className="FilterMenu__genre-filter">
         {menuConfig.map((item) => {
-          return (
-            <FilterMenuItem
-              key={item.filterOption}
-              item={item}
-              setGenreFilter={props.setGenreFilter}
-              isActive={props.activeFilterOption === item.filterOption}
-            />
-          );
+          return <FilterMenuItem key={item.filterOption} item={item} />;
         })}
       </div>
       <div className="FilterMenu__sorting">SORT BY</div>
