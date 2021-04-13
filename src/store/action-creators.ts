@@ -36,6 +36,13 @@ export const setSortingValue = (value: keyof Movie): Action => {
   };
 };
 
+export const addMovieActionCreator = (movie: Movie): Action => {
+  return {
+    type: ACTION_TYPES.ADD_MOVIE,
+    payload: movie,
+  };
+};
+
 export const initSortFilterMovies = (): Action => {
   return {
     type: ACTION_TYPES.INIT_SORT_FILTER_MOVIES,

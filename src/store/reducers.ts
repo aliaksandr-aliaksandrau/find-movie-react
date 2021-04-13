@@ -31,6 +31,10 @@ export const rootReducer = function (
       return { ...state, sortingValue: action.payload };
     }
 
+    case ACTION_TYPES.ADD_MOVIE: {
+      return { ...state, movieList: [...state.movieList, action.payload] };
+    }
+
     case ACTION_TYPES.INIT_SORT_FILTER_MOVIES: {
       const genreFilter = state.genreFilter;
       const searchText = state.searchText;
