@@ -35,6 +35,13 @@ export const rootReducer = function (
       return { ...state, movieList: [...state.movieList, action.payload] };
     }
 
+    case ACTION_TYPES.UPDATE_MOVIE: {
+      const movieList = [...state.movieList];
+      const movieId = movieList.findIndex((m) => m.id === action.payload.id);
+      movieList.splice(movieId, 1, action.payload);
+      return { ...state, movieList: movieList };
+    }
+
     case ACTION_TYPES.INIT_SORT_FILTER_MOVIES: {
       const genreFilter = state.genreFilter;
       const searchText = state.searchText;

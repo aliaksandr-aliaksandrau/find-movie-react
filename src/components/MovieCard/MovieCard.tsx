@@ -27,7 +27,9 @@ export default function MovieCard(props: {
         <div className="MovieCard__title">{props.movie.title}</div>
         <div className="MovieCard__year">{props.movie.releaseYear}</div>
       </div>
-      <div className="MovieCard__description">{props.movie.description}</div>
+      <div className="MovieCard__description">
+        {props.movie.genresDescription}
+      </div>
       <button onClick={props.openEditMovieForm as any}>EDIT</button>
       <button onClick={props.openDeleteMovieForm as any}>DELETE</button>
     </div>

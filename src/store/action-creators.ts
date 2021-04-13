@@ -43,6 +43,13 @@ export const addMovieActionCreator = (movie: Movie): Action => {
   };
 };
 
+export const updateMovieActionCreator = (movie: Movie): Action => {
+  return {
+    type: ACTION_TYPES.UPDATE_MOVIE,
+    payload: movie,
+  };
+};
+
 export const initSortFilterMovies = (): Action => {
   return {
     type: ACTION_TYPES.INIT_SORT_FILTER_MOVIES,
