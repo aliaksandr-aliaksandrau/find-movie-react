@@ -12,6 +12,24 @@
   }
 
   .FilterMenu__sorting {
+    .FilterMenu__sorting-title {
+      font-size: 16px;
+      color: #b1b1b1;
+      margin-right: 20px;
+    }
+
+    .FilterMenu__sorting-dropdown {
+      background-color: #232323;
+      color: white;
+      border: 0px;
+      height: 20px;
+
+      > option {
+        border: 0px;
+        height: 20px;
+      }
+    }
+
     margin-right: 50px;
   }
 }

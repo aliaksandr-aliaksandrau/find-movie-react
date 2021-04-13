@@ -39,20 +39,21 @@ export default function FilterMenu() {
           return <FilterMenuItem key={item.filterOption} item={item} />;
         })}
       </div>
-      <div className="FilterMenu__sorting">SORT BY</div>
-
-      <select
-        onChange={onSelectSortItem}
-        className="FilterMenu__sorting-dropdown"
-      >
-        {sortOptionsConfig.map((item) => {
-          return (
-            <option value={item.filterOption} key={item.filterOption}>
-              {item.name}
-            </option>
-          );
-        })}
-      </select>
+      <div className="FilterMenu__sorting">
+        <span className="FilterMenu__sorting-title">SORT BY</span>
+        <select 
+          onChange={onSelectSortItem}
+          className="FilterMenu__sorting-dropdown"
+        >
+          {sortOptionsConfig.map((item) => {
+            return (
+              <option value={item.filterOption} key={item.filterOption}>
+                {item.name.toLocaleUpperCase()}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </div>
   );
 }
