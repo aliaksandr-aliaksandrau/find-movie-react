@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import * as Yup from "yup";
 import {
   addMovieActionCreator,
   initSortFilterMovies,
@@ -17,20 +18,35 @@ interface AddMovieFormValues {
   runtime: number;
 }
 
+const movieFormInitialValues: AddMovieFormValues = {
+  title: "",
+  releaseDate: "",
+  genres: [],
+  movieUrl: "",
+  overview: "",
+  runtime: 0,
+};
+
+const movieValidationSchema = Yup.object().shape({
+  title: Yup.string().required("Please enter movie title"),
+  movieUrl: Yup.string().url("Invalid poster link url"),
+  releaseDate: Yup.date().required("Please enter release date"),
+  genres: Yup.array()
+    .of(Yup.string())
+    .min(1, "Select at least one genre to proceed"),
+  runtime: Yup.number().min(0, "Please enter positive value"),
+});
+
 export default function AddMovieForm() {
   const dispatch = useDispatch();
+
+  //  const [showMovieAddedMsg, setShowMovieAddedMsg] = React.useState(false);
 
   return (
     <div className="AddMovieForm__form-container">
       <Formik
-        initialValues={{
-          title: "",
-          releaseDate: "",
-          genres: [],
-          movieUrl: "",
-          overview: "",
-          runtime: 0,
-        }}
+        initialValues={movieFormInitialValues}
+        validationSchema={movieValidationSchema}
         onSubmit={(
           values: AddMovieFormValues,
           { setSubmitting, resetForm }: FormikHelpers<AddMovieFormValues>
@@ -49,18 +65,27 @@ export default function AddMovieForm() {
 
           dispatch(addMovieActionCreator(movie));
           dispatch(initSortFilterMovies());
-
+          // setShowMovieAddedMsg(true);
           resetForm();
         }}
       >
-        {({ isSubmitting, resetForm }) => (
+        {({ resetForm, touched }) => (
           <Form>
+            {/* {Object.values(touched).every((el) => !el) && showMovieAddedMsg && (
+              <span>Movie was added</span>
+            )} */}
+
             <label>TITLE</label>
             <Field
               type="text"
               id="title"
               name="title"
               placeholder="Title here"
+            />
+            <ErrorMessage
+              name="title"
+              component="span"
+              className={"ModalWindow__form-error-message"}
             />
 
             <label>RELEASE DATE</label>
@@ -70,6 +95,11 @@ export default function AddMovieForm() {
               name="releaseDate"
               placeholder="Select Date"
             />
+            <ErrorMessage
+              name="releaseDate"
+              component="span"
+              className={"ModalWindow__form-error-message"}
+            />
 
             <label>MOVIE URL</label>
             <Field
@@ -77,6 +107,11 @@ export default function AddMovieForm() {
               id="movieUrl"
               name="movieUrl"
               placeholder="Movie URL here"
+            />
+            <ErrorMessage
+              name="movieUrl"
+              component="span"
+              className={"ModalWindow__form-error-message"}
             />
 
             <label>GENRE</label>
@@ -87,13 +122,19 @@ export default function AddMovieForm() {
               id="genres"
               name="genres"
               placeholder="Select Genre"
-              style={{ display: 'block' }}
+              style={{ display: "block" }}
             >
+              <option value=""></option>
               <option value="Crime">Crime</option>
               <option value="Documentary">Documentary</option>
               <option value="Horror">Horror</option>
               <option value="Comedy">Comedy</option>
             </Field>
+            <ErrorMessage
+              name="genres"
+              component="span"
+              className={"ModalWindow__form-error-message"}
+            />
 
             <label>OVERVIEW</label>
             <Field
@@ -110,12 +151,20 @@ export default function AddMovieForm() {
               name="runtime"
               placeholder="Runtime here"
             />
+            <ErrorMessage
+              name="runtime"
+              component="span"
+              className={"ModalWindow__form-error-message"}
+            />
 
             <div className="ModalWindow__control-block-container">
               <button
                 className="ModalWindow__button-light"
                 type="reset"
-                onClick={() => resetForm()}
+                onClick={() => {
+                  // setShowMovieAddedMsg(false);
+                  resetForm;
+                }}
               >
                 RESET
               </button>
