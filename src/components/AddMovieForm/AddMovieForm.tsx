@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -7,60 +8,124 @@ import {
 } from "../../store/action-creators";
 import { Movie } from "../MovieCard";
 
-export default function AddMovieForm(props: any) {
+interface AddMovieFormValues {
+  title: string;
+  releaseDate: string;
+  genres: string[];
+  movieUrl: string;
+  overview: string;
+  runtime: number;
+}
+
+export default function AddMovieForm() {
   const dispatch = useDispatch();
-
-  function createMovie(event: any) {
-    event.preventDefault();
-
-    const title = event.target.title.value;
-    const releaseDate = event.target.releaseDate.value;
-    const movieUrl = event.target.movieUrl.value;
-    const genre = event.target.genre.value;
-    const overview = event.target.overview.value;
-    const runtime = event.target.runtime.value;
-
-    const movie = new Movie({
-      id: uuidv4(),
-      title: title,
-      release_date: releaseDate,
-      genres: [genre],
-      poster_path: movieUrl,
-      overview: overview,
-      runtime: runtime,
-    });
-
-    dispatch(addMovieActionCreator(movie));
-    dispatch(initSortFilterMovies());
-
-    props.closeModalWindow();
-  }
 
   return (
     <div className="AddMovieForm__form-container">
-      <form onSubmit={createMovie}>
-        <label>TITLE</label>
-        <input type="text" id="title" placeholder="Title here"></input>
-        <label>RELEASE DATE</label>
-        <input type="date" id="releaseDate" placeholder="Select Date"></input>
-        <label>MOVIE URL</label>
-        <input type="text" id="movieUrl" placeholder="Movie URL here"></input>
-        <label>GENRE</label>
-        <input type="select" id="genre" placeholder="Select Genre"></input>
-        <label>OVERVIEW</label>
-        <input type="text" id="overview" placeholder="Overview here"></input>
-        <label>RUNTIME</label>
-        <input type="number" id="runtime" placeholder="Runtime here"></input>
+      <Formik
+        initialValues={{
+          title: "",
+          releaseDate: "",
+          genres: [],
+          movieUrl: "",
+          overview: "",
+          runtime: 0,
+        }}
+        onSubmit={(
+          values: AddMovieFormValues,
+          { setSubmitting, resetForm }: FormikHelpers<AddMovieFormValues>
+        ) => {
+          setSubmitting(false);
 
-        <div className="ModalWindow__control-block-container">
-          <button className="ModalWindow__button-light">RESET</button>
-          <input
-            type="submit"
-            value="SUBMIT"
-            className="ModalWindow__button-filled"
-          />
-        </div>
-      </form>
+          const movie = new Movie({
+            id: uuidv4(),
+            title: values.title,
+            release_date: values.releaseDate,
+            genres: values.genres,
+            poster_path: values.movieUrl,
+            overview: values.overview,
+            runtime: values.runtime,
+          });
+
+          dispatch(addMovieActionCreator(movie));
+          dispatch(initSortFilterMovies());
+
+          resetForm();
+        }}
+      >
+        {({ isSubmitting, resetForm }) => (
+          <Form>
+            <label>TITLE</label>
+            <Field
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Title here"
+            />
+
+            <label>RELEASE DATE</label>
+            <Field
+              type="date"
+              id="releaseDate"
+              name="releaseDate"
+              placeholder="Select Date"
+            />
+
+            <label>MOVIE URL</label>
+            <Field
+              type="text"
+              id="movieUrl"
+              name="movieUrl"
+              placeholder="Movie URL here"
+            />
+
+            <label>GENRE</label>
+            <Field
+              as="select"
+              type="select"
+              multiple
+              id="genres"
+              name="genres"
+              placeholder="Select Genre"
+              style={{ display: 'block' }}
+            >
+              <option value="Crime">Crime</option>
+              <option value="Documentary">Documentary</option>
+              <option value="Horror">Horror</option>
+              <option value="Comedy">Comedy</option>
+            </Field>
+
+            <label>OVERVIEW</label>
+            <Field
+              type="text"
+              id="overview"
+              name="overview"
+              placeholder="Overview here"
+            />
+
+            <label>RUNTIME</label>
+            <Field
+              type="number"
+              id="runtime"
+              name="runtime"
+              placeholder="Runtime here"
+            />
+
+            <div className="ModalWindow__control-block-container">
+              <button
+                className="ModalWindow__button-light"
+                type="reset"
+                onClick={() => resetForm()}
+              >
+                RESET
+              </button>
+              <button className="ModalWindow__button-filled" type="submit">
+                SUBMIT
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }
