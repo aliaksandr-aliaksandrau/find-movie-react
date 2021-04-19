@@ -1,15 +1,14 @@
 import * as React from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
-import {
-  addMovieActionCreator,
-  initSortFilterMovies,
-} from "../../store/action-creators";
+import { initSortFilterMovies } from "../../store/action-creators";
 import { Movie } from "../MovieCard";
+import { AddEditMovieFormProps } from "./AddEditMovieFormPropsConfig";
+import { State } from "../../store/initialState";
 
-interface AddMovieFormValues {
+interface AddEditMovieFormValues {
   title: string;
   releaseDate: string;
   genres: string[];
@@ -17,15 +16,6 @@ interface AddMovieFormValues {
   overview: string;
   runtime: number;
 }
-
-const movieFormInitialValues: AddMovieFormValues = {
-  title: "",
-  releaseDate: "",
-  genres: [],
-  movieUrl: "",
-  overview: "",
-  runtime: 0,
-};
 
 const movieValidationSchema = Yup.object().shape({
   title: Yup.string().required("Please enter movie title"),
@@ -37,8 +27,28 @@ const movieValidationSchema = Yup.object().shape({
   runtime: Yup.number().min(0, "Please enter positive value"),
 });
 
-export default function AddMovieForm() {
+export default function AddEditMovieForm(props: {
+  movieId: string;
+  closeModalWindow: Function;
+  formConfig: AddEditMovieFormProps;
+}) {
   const dispatch = useDispatch();
+
+  const activeMovie: Movie =
+    props.formConfig.formType === "Edit"
+      ? useSelector((state: State) =>
+          state.movieList.find((m) => m.id === props.movieId)
+        )
+      : ({} as Movie);
+
+  const movieFormInitialValues: AddEditMovieFormValues = {
+    title: activeMovie.title || "",
+    releaseDate: activeMovie.releaseDate || "",
+    genres: activeMovie.genres || [],
+    movieUrl: activeMovie.posterPath || "",
+    overview: activeMovie.overview || "",
+    runtime: activeMovie.runtime || 0,
+  };
 
   //  const [showMovieAddedMsg, setShowMovieAddedMsg] = React.useState(false);
 
@@ -48,25 +58,36 @@ export default function AddMovieForm() {
         initialValues={movieFormInitialValues}
         validationSchema={movieValidationSchema}
         onSubmit={(
-          values: AddMovieFormValues,
-          { setSubmitting, resetForm }: FormikHelpers<AddMovieFormValues>
+          values: AddEditMovieFormValues,
+          { setSubmitting, resetForm }: FormikHelpers<AddEditMovieFormValues>
         ) => {
           setSubmitting(false);
 
-          const movie = new Movie({
-            id: uuidv4(),
-            title: values.title,
-            release_date: values.releaseDate,
-            genres: values.genres,
-            poster_path: values.movieUrl,
-            overview: values.overview,
-            runtime: values.runtime,
-          });
+          let movie: Movie = null;
 
-          dispatch(addMovieActionCreator(movie));
+          if (props.formConfig.formType === "Add") {
+            movie = new Movie({
+              id: uuidv4(),
+              title: values.title,
+              release_date: values.releaseDate,
+              genres: values.genres,
+              poster_path: values.movieUrl,
+              overview: values.overview,
+              runtime: values.runtime,
+            });
+          } else if (props.formConfig.formType === "Edit") {
+            movie = activeMovie;
+            movie.title = values.title;
+            movie.releaseDate = values.releaseDate;
+            movie.genres = values.genres;
+            movie.posterPath = values.movieUrl;
+            movie.overview = values.overview;
+            movie.runtime = values.runtime;
+          }
+
+          dispatch(props.formConfig.actionCreator(movie));
           dispatch(initSortFilterMovies());
           // setShowMovieAddedMsg(true);
-          resetForm();
         }}
       >
         {({ resetForm, touched }) => (
@@ -122,7 +143,6 @@ export default function AddMovieForm() {
               id="genres"
               name="genres"
               placeholder="Select Genre"
-              style={{ display: "block" }}
             >
               <option value=""></option>
               <option value="Crime">Crime</option>
@@ -169,7 +189,7 @@ export default function AddMovieForm() {
                 RESET
               </button>
               <button className="ModalWindow__button-filled" type="submit">
-                SUBMIT
+                {props.formConfig.submitButtonText.toLocaleUpperCase()}
               </button>
             </div>
           </Form>
