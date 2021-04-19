@@ -7,6 +7,7 @@ import { initSortFilterMovies } from "../../store/action-creators";
 import { Movie } from "../MovieCard";
 import { AddEditMovieFormProps } from "./AddEditMovieFormPropsConfig";
 import { State } from "../../store/initialState";
+import ModalFormInputField from "../ModalWindow/ModalFormInputField";
 
 interface AddEditMovieFormValues {
   title: string;
@@ -96,43 +97,26 @@ export default function AddEditMovieForm(props: {
               <span>Movie was added</span>
             )} */}
 
-            <label>TITLE</label>
-            <Field
-              type="text"
-              id="title"
+            <ModalFormInputField
               name="title"
+              id="title"
+              type="text"
+              label="TITLE"
               placeholder="Title here"
             />
-            <ErrorMessage
-              name="title"
-              component="span"
-              className={"ModalWindow__form-error-message"}
-            />
-
-            <label>RELEASE DATE</label>
-            <Field
-              type="date"
-              id="releaseDate"
+            <ModalFormInputField
               name="releaseDate"
+              id="releaseDate"
+              type="date"
+              label="RELEASE DATE"
               placeholder="Select Date"
             />
-            <ErrorMessage
-              name="releaseDate"
-              component="span"
-              className={"ModalWindow__form-error-message"}
-            />
-
-            <label>MOVIE URL</label>
-            <Field
-              type="text"
+            <ModalFormInputField
+              name="movieUrl"
               id="movieUrl"
-              name="movieUrl"
+              type="text"
+              label="MOVIE URL"
               placeholder="Movie URL here"
-            />
-            <ErrorMessage
-              name="movieUrl"
-              component="span"
-              className={"ModalWindow__form-error-message"}
             />
 
             <label>GENRE</label>
@@ -156,25 +140,19 @@ export default function AddEditMovieForm(props: {
               className={"ModalWindow__form-error-message"}
             />
 
-            <label>OVERVIEW</label>
-            <Field
-              type="text"
-              id="overview"
+            <ModalFormInputField
               name="overview"
+              id="overview"
+              type="text"
+              label="OVERVIEW"
               placeholder="Overview here"
             />
-
-            <label>RUNTIME</label>
-            <Field
-              type="number"
+            <ModalFormInputField
+              name="runtime"
               id="runtime"
-              name="runtime"
+              type="number"
+              label="RUNTIME"
               placeholder="Runtime here"
-            />
-            <ErrorMessage
-              name="runtime"
-              component="span"
-              className={"ModalWindow__form-error-message"}
             />
 
             <div className="ModalWindow__control-block-container">
