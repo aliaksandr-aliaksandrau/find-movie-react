@@ -1,15 +1,25 @@
 import * as React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  initSortFilterMovies,
+  setSearchText,
+} from "../../store/action-creators";
 import "./SearchBar.scss";
 
-export default function Search(props: { searchMovie: Function }) {
-  const [searchText, setSearchText] = useState("");
+export default function Search() {
+  const [search, setSearch] = useState("");
+
+  const dispatch = useDispatch();
 
   const submitSearch = (event: any) => {
-    props.searchMovie(searchText);
     event.preventDefault();
+
+    dispatch(setSearchText(search));
+    dispatch(initSortFilterMovies());
   };
-  const changeSearchValue = (event: any) => setSearchText(event.target.value);
+
+  const changeSearchValue = (event: any) => setSearch(event.target.value);
 
   return (
     <form className="SearchBar" onSubmit={submitSearch}>

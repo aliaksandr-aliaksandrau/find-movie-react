@@ -28,7 +28,7 @@ export default function MovieDetails(props: { movie: Movie; goHomePage: any }) {
             {movie.title}
             <div className="MovieDetails__rating">{movie.rating}</div>
           </div>
-          <div className="MovieDetails__genre">{movie.genresDesciption}</div>
+          <div className="MovieDetails__genre">{movie.genresDescription}</div>
           <div className="MovieDetails__year">
             <span> {movie.releaseYear} </span>
             <span> {movie.runtime} min</span>

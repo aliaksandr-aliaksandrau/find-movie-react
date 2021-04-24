@@ -3,10 +3,7 @@ import Logo from "../Logo/Logo";
 import SearchBar from "../SearchBar/SearchBar";
 import "./Header.scss";
 
-export default function Header(props: {
-  searchMovie: Function;
-  openAddMovieForm: Function;
-}) {
+export default function Header(props: { openAddMovieForm: Function }) {
   return (
     <div className="Header">
       <div className="Header__add-movie-button-container">
@@ -20,7 +17,7 @@ export default function Header(props: {
       </div>
       {/* <img className="image" src={require('./collage.jpg')}></img> */}
       <p className="Header_title">FIND YOUR MOVIE</p>
-      <SearchBar searchMovie={props.searchMovie} />
+      <SearchBar />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Movie } from "../../components/MovieCard";
 import { mockedMovies } from "../../components/MovieDashboard/mocked-movies";
+import { State } from "../../store/initialState";
 
 export function useLoadMovieById(movieId: string) {
   useEffect(() => {
@@ -13,7 +15,8 @@ export function useLoadFilteredMovies(
   searchText: string,
   genreFilter: string
 ): Movie[] {
-  const movieList = mockedMovies.map((e) => new Movie(e));
+
+  const movieList: Movie[] = [];
   const [movies, setMovies] = useState(movieList.slice(0, 9));
 
   useEffect((): any => {

@@ -1,26 +1,33 @@
 import * as React from "react";
-import { FilterMenuItemModel } from "./filter-menu-item.model";
+import { useDispatch, useSelector } from "react-redux";
 import "./FilterMenuItem.scss";
+import {
+  initSortFilterMovies,
+  setGenreFilter,
+} from "../../../store/action-creators";
+import { State } from "../../../store/initialState";
+import { FilterMenuItemModel } from "./filter-menu-item.model";
 
-export default function FilterMenuItem(props: {
-  item: FilterMenuItemModel;
-  setGenreFilter: Function;
-  isActive: boolean;
-}) {
+export default function FilterMenuItem(props: { item: FilterMenuItemModel }) {
   const item = props.item;
 
-  const setFilter: any = () => {
-    props.setGenreFilter(item.filterOption);
-  };
+  const dispatch = useDispatch();
+
+  function setFilter() {
+    dispatch(setGenreFilter(item.filterOption));
+    dispatch(initSortFilterMovies());
+  }
+
+  const genreFilter = useSelector((state: State) => state.genreFilter);
 
   return (
     <div className="FilterMenuItem__container">
-      <span>{props.isActive}</span>
       <span
-        className={props.isActive ? "FilterMenuItem__title" : null}
+        className={
+          item.filterOption === genreFilter ? "FilterMenuItem__title" : null
+        }
         onClick={setFilter}
       >
-        {props.isActive}
         {item.name.toLocaleUpperCase()}
       </span>
     </div>
