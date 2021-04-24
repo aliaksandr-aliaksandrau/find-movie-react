@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useCallback, useState } from "react";
+import AddEditMovieForm from "../AddEditMovieForm/AddEditMovieForm";
+import { editMovieFormPropsConfig } from "../AddEditMovieForm/AddEditMovieFormPropsConfig";
 import DeleteMovieForm from "../DeleteMovieForm/DeleteMovieForm";
-import EditMovieForm from "../EditMovieForm/EditMovieForm";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import { Movie } from "../MovieCard/movie.model";
 import MovieCard from "../MovieCard/MovieCard";
@@ -13,7 +14,7 @@ type MovieDashboardProps = {
   setSelectedMovie: Function;
 };
 
-const EditMovieModalWindow = ModalWindow(EditMovieForm, "Edit Movie");
+const EditMovieModalWindow = ModalWindow(AddEditMovieForm, "Edit Movie");
 const DeleteMovieModalWindow = ModalWindow(DeleteMovieForm, "Delete Movie");
 
 export default function MovieDashboard(props: MovieDashboardProps) {
@@ -64,6 +65,7 @@ export default function MovieDashboard(props: MovieDashboardProps) {
         {showEditForm && (
           <EditMovieModalWindow
             movieId={activeMovieId}
+            formConfig={editMovieFormPropsConfig}
             closeModalWindow={() => setShowEditForm(false)}
           />
         )}

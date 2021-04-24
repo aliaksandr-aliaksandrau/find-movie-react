@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AddMovieForm from "../../components/AddMovieForm/AddMovieForm";
+import AddEditMovieForm from "../../components/AddEditMovieForm/AddEditMovieForm";
+import { addMovieFormPropsConfig } from "../../components/AddEditMovieForm/AddEditMovieFormPropsConfig";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import ModalWindow from "../../components/ModalWindow/ModalWindow";
@@ -11,7 +12,7 @@ import { State } from "../../store/initialState";
 import FilterMenu from "../FilterMenu/FilterMenu";
 import MovieDetails from "../MovieDetails/MovieDetails";
 
-const AddMovieModalWindow = ModalWindow(AddMovieForm, "Add Movie");
+const AddMovieModalWindow = ModalWindow(AddEditMovieForm, "Add Movie");
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ export default function HomePage() {
       <Footer />
       {showAddMovieForm && (
         <AddMovieModalWindow
+          formConfig={addMovieFormPropsConfig}
           closeModalWindow={() => setShowAddMovieForm(false)}
         />
       )}
