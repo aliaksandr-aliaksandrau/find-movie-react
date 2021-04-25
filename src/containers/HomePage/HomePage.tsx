@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import AddEditMovieForm from "../../components/AddEditMovieForm/AddEditMovieForm";
 import { addMovieFormPropsConfig } from "../../components/AddEditMovieForm/AddEditMovieFormPropsConfig";
 import Footer from "../../components/Footer/Footer";
@@ -23,19 +24,31 @@ export default function HomePage() {
   const movies = useSelector((state: State) => state.filteredMovies);
 
   const [showAddMovieForm, setShowAddMovieForm] = useState(false);
-  const [activeMovie, setActiveMovie] = useState(null);
-  const goHomePage = () => setActiveMovie(null);
+
+  const { path, url } = useRouteMatch();
 
   return (
     <>
-      {activeMovie && (
+      {/* {activeMovie && (
         <MovieDetails movie={activeMovie} goHomePage={goHomePage} />
-      )}
+      )} */}
+      <Switch>
+        <Route exact path={`${path}/:id`}>
+          <MovieDetails />
+        </Route>
+      </Switch>
+
+      <Switch>
+        <Route exact path={`${path}/`}>
+          <Header openAddMovieForm={() => setShowAddMovieForm(true)} />
+        </Route>
+      </Switch>
+      {/* 
       {!activeMovie && (
         <Header openAddMovieForm={() => setShowAddMovieForm(true)} />
-      )}
+      )} */}
       <FilterMenu />
-      <MovieDashboard movies={movies} setSelectedMovie={setActiveMovie} />
+      <MovieDashboard movies={movies} />
       <Footer />
       {showAddMovieForm && (
         <AddMovieModalWindow

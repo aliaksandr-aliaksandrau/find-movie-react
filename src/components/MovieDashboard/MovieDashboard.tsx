@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useCallback, useState } from "react";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import AddEditMovieForm from "../AddEditMovieForm/AddEditMovieForm";
 import { editMovieFormPropsConfig } from "../AddEditMovieForm/AddEditMovieFormPropsConfig";
 import DeleteMovieForm from "../DeleteMovieForm/DeleteMovieForm";
@@ -12,7 +13,6 @@ import NoMovieFound from "./NoMovieFound/NoMovieFound";
 
 type MovieDashboardProps = {
   movies: Movie[];
-  setSelectedMovie: Function;
 };
 
 const EditMovieModalWindow = ModalWindow(AddEditMovieForm, "Edit Movie");
@@ -20,6 +20,8 @@ const DeleteMovieModalWindow = ModalWindow(DeleteMovieForm, "Delete Movie");
 
 export default function MovieDashboard(props: MovieDashboardProps) {
   const movies = props.movies;
+
+  const { path, url } = useRouteMatch();
 
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -38,40 +40,74 @@ export default function MovieDashboard(props: MovieDashboardProps) {
     setActiveMovieId(movieId);
   };
 
-  let result;
+  return (
+    <Switch>
+      {/* <Route exact path={path}>
+        <NoMovieFound />
+      </Route> */}
+      <Route path={`${path}`}>
+        <>
+          <div className="MovieDashboard__movies-list">
+            {movies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                openEditMovieForm={getOpenEditMovieForm(movie.id)}
+                openDeleteMovieForm={getOpenDeleteMovieForm(movie.id)}
+              />
+            ))}
+          </div>
 
-  if (movies && Array.isArray(movies) && movies.length === 0) {
-    result = <NoMovieFound />;
-  } else {
-    result = (
-      <>
-        <div className="MovieDashboard__movies-list">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              openEditMovieForm={getOpenEditMovieForm(movie.id)}
-              openDeleteMovieForm={getOpenDeleteMovieForm(movie.id)}
-              setSelectedMovie={props.setSelectedMovie}
+          {showDeleteForm && (
+            <DeleteMovieModalWindow
+              movieId={activeMovieId}
+              closeModalWindow={() => setShowDeleteForm(false)}
             />
-          ))}
-        </div>
+          )}
+          {showEditForm && (
+            <EditMovieModalWindow
+              movieId={activeMovieId}
+              formConfig={editMovieFormPropsConfig}
+              closeModalWindow={() => setShowEditForm(false)}
+            />
+          )}
+        </>
+      </Route>
+    </Switch>
+  );
 
-        {showDeleteForm && (
-          <DeleteMovieModalWindow
-            movieId={activeMovieId}
-            closeModalWindow={() => setShowDeleteForm(false)}
-          />
-        )}
-        {showEditForm && (
-          <EditMovieModalWindow
-            movieId={activeMovieId}
-            formConfig={editMovieFormPropsConfig}
-            closeModalWindow={() => setShowEditForm(false)}
-          />
-        )}
-      </>
-    );
-  }
-  return result;
+  // if (movies && Array.isArray(movies) && movies.length === 0) {
+  //   result = <NoMovieFound />;
+  // } else {
+  //   result = (
+  //     <>
+  //       <div className="MovieDashboard__movies-list">
+  //         {movies.map((movie) => (
+  //           <MovieCard
+  //             key={movie.id}
+  //             movie={movie}
+  //             openEditMovieForm={getOpenEditMovieForm(movie.id)}
+  //             openDeleteMovieForm={getOpenDeleteMovieForm(movie.id)}
+  //             setSelectedMovie={props.setSelectedMovie}
+  //           />
+  //         ))}
+  //       </div>
+
+  //       {showDeleteForm && (
+  //         <DeleteMovieModalWindow
+  //           movieId={activeMovieId}
+  //           closeModalWindow={() => setShowDeleteForm(false)}
+  //         />
+  //       )}
+  //       {showEditForm && (
+  //         <EditMovieModalWindow
+  //           movieId={activeMovieId}
+  //           formConfig={editMovieFormPropsConfig}
+  //           closeModalWindow={() => setShowEditForm(false)}
+  //         />
+  //       )}
+  //     </>
+  //   );
+  // }
+  //return result;
 }

@@ -25,9 +25,11 @@ export default function App() {
                   <NotFoundPage />
                 </Route>
 
-                <Route exact path="/">
+                <Route path="/movies">
                   <HomePage />
                 </Route>
+                <Redirect exact from="/" to="/movies" />
+
                 <Redirect from="*" to="/not-found" />
               </Switch>
             </ErrorBoundary>

@@ -1,17 +1,28 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import SearchIcon from "../../components/icons/SearchIcon/SearchIcon";
 import Logo from "../../components/Logo/Logo";
-import { Movie } from "../../components/MovieCard/movie.model";
+import { State } from "../../store/initialState";
 import "./MovieDetails.scss";
 
-export default function MovieDetails(props: { movie: Movie; goHomePage: any }) {
-  const movie = props.movie;
+export default function MovieDetails() {
+  const { id } = useParams() as { id: string };
+  const history = useHistory();
+
+  const movie = useSelector((state: State) => {
+    return state.filteredMovies.find((e) => e.id == id);
+  });
+
+  function moveToMovies() {
+    history.push(`/`);
+  }
 
   return (
     <div className="MovieDetails">
       <div className="MovieDetails__header">
         <Logo />
-        <div className="MovieDetails__search-icon" onClick={props.goHomePage}>
+        <div className="MovieDetails__search-icon" onClick={moveToMovies}>
           <SearchIcon />
         </div>
       </div>
