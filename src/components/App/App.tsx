@@ -5,14 +5,35 @@ import HomePage from "../../containers/HomePage/HomePage";
 import { Provider } from "react-redux";
 import store from "../../store/store";
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import NotFoundPage from "../../containers/PageNotFound/PageNotFound";
+
 export default function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
-        <ErrorBoundary>
-          <HomePage />
-        </ErrorBoundary>
-      </div>
-    </Provider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <ErrorBoundary>
+              <Switch>
+                <Route path="/not-found">
+                  <NotFoundPage />
+                </Route>
+
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+                <Redirect from="*" to="/not-found" />
+              </Switch>
+            </ErrorBoundary>
+          </div>
+        </Router>
+      </Provider>
+    </React.StrictMode>
   );
 }
