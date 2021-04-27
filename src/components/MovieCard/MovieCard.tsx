@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useHistory } from "react-router-dom";
 import { Movie } from "./movie.model";
 
 import "./MovieCard.scss";
@@ -7,10 +8,11 @@ export default function MovieCard(props: {
   movie: Movie;
   openDeleteMovieForm: Function;
   openEditMovieForm: Function;
-  setSelectedMovie: Function;
 }) {
+  const history = useHistory();
+
   const setSelectedMovie: any = () => {
-    props.setSelectedMovie(props.movie);
+    history.push(`/movies/${props.movie.id}`);
   };
 
   return (

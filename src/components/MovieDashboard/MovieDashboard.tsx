@@ -8,10 +8,10 @@ import { Movie } from "../MovieCard/movie.model";
 import MovieCard from "../MovieCard/MovieCard";
 
 import "./MovieDashboard.scss";
+import NoMovieFound from "./NoMovieFound/NoMovieFound";
 
 type MovieDashboardProps = {
   movies: Movie[];
-  setSelectedMovie: Function;
 };
 
 const EditMovieModalWindow = ModalWindow(AddEditMovieForm, "Edit Movie");
@@ -38,9 +38,8 @@ export default function MovieDashboard(props: MovieDashboardProps) {
   };
 
   let result;
-
   if (movies && Array.isArray(movies) && movies.length === 0) {
-    result = <div className="MovieDashboard__not-found">No Movie Found</div>;
+    result = <NoMovieFound />;
   } else {
     result = (
       <>
@@ -51,7 +50,6 @@ export default function MovieDashboard(props: MovieDashboardProps) {
               movie={movie}
               openEditMovieForm={getOpenEditMovieForm(movie.id)}
               openDeleteMovieForm={getOpenDeleteMovieForm(movie.id)}
-              setSelectedMovie={props.setSelectedMovie}
             />
           ))}
         </div>
