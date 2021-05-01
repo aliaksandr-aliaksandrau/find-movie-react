@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./styles.scss";
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
-import HomePage from "../../containers/HomePage/HomePage";
+import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
+import HomePage from "../HomePage/HomePage";
 import { Provider } from "react-redux";
 import store from "../../store/store";
 
@@ -11,7 +11,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import NotFoundPage from "../../containers/PageNotFound/PageNotFound";
+import NotFoundPage from "../PageNotFound/PageNotFound";
 
 export default function App() {
   return (
