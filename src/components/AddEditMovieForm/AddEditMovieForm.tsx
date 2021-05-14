@@ -51,8 +51,6 @@ export default function AddEditMovieForm(props: {
     runtime: activeMovie.runtime || 0,
   };
 
-  //  const [showMovieAddedMsg, setShowMovieAddedMsg] = React.useState(false);
-
   return (
     <div className="AddMovieForm__form-container">
       <Formik
@@ -62,7 +60,7 @@ export default function AddEditMovieForm(props: {
           values: AddEditMovieFormValues,
           { setSubmitting, resetForm }: FormikHelpers<AddEditMovieFormValues>
         ) => {
-          setSubmitting(false);
+          //  setSubmitting(false);
 
           let movie: Movie = null;
 
@@ -88,15 +86,11 @@ export default function AddEditMovieForm(props: {
 
           dispatch(props.formConfig.actionCreator(movie));
           dispatch(initSortFilterMovies());
-          // setShowMovieAddedMsg(true);
+          props.closeModalWindow();
         }}
       >
         {({ resetForm, touched }) => (
           <Form>
-            {/* {Object.values(touched).every((el) => !el) && showMovieAddedMsg && (
-              <span>Movie was added</span>
-            )} */}
-
             <ModalFormInputField
               name="title"
               id="title"
@@ -160,7 +154,6 @@ export default function AddEditMovieForm(props: {
                 className="ModalWindow__button-light"
                 type="reset"
                 onClick={() => {
-                  // setShowMovieAddedMsg(false);
                   resetForm;
                 }}
               >
