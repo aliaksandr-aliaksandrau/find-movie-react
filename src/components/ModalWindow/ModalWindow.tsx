@@ -1,5 +1,5 @@
 import * as React from "react";
-import ClosingCrossIcon from "./ClosingCrossIcon";
+import ClosingCrossIcon from "../icons/ClosingCrossIcon";
 
 import "./ModalWindow.scss";
 

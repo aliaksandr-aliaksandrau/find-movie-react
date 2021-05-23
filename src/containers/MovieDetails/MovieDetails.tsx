@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import SearchIcon from "../../components/icons/SearchIcon/SearchIcon";
+import SearchIcon from "../../components/icons/SearchIcon";
 import Logo from "../../components/Logo/Logo";
 import { State } from "../../store/initialState";
 import "./MovieDetails.scss";
